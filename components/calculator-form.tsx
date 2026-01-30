@@ -20,7 +20,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { parseTimeToSeconds, calculateZones, type CalculatorResult } from '@/lib/pace-utils';
+import {
+  parseTimeToSeconds,
+  calculateZones,
+  type CalculatorResult,
+  timePartsToSeconds,
+  validateFiveKTime,
+} from '@/lib/pace-utils';
 
 interface CalculatorFormProps {
   onCalculate: (result: CalculatorResult) => void;
@@ -53,19 +59,11 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
 
     const mins = parseInt(minutes, 10) || 0;
     const secs = parseInt(seconds, 10) || 0;
-    const totalSeconds = mins * 60 + secs;
+    const totalSeconds = timePartsToSeconds(mins, secs);
 
-    // Validate input
-    if (totalSeconds < 12 * 60) {
-      setError('Een 5K-tijd onder de 12 minuten is onrealistisch. Controleer je invoer.');
-      return;
-    }
-    if (totalSeconds > 45 * 60) {
-      setError('Een 5K-tijd boven de 45 minuten is wellicht te langzaam voor intervallen. Overweeg eerst je basisconditie op te bouwen.');
-      return;
-    }
-    if (mins === 0 && secs === 0) {
-      setError('Voer je 5K-tijd in.');
+    const validationError = validateFiveKTime(totalSeconds);
+    if (validationError) {
+      setError(validationError);
       return;
     }
 

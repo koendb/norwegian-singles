@@ -14,6 +14,23 @@ export function parseTimeToSeconds(timeStr: string): number | null {
   return null;
 }
 
+export function timePartsToSeconds(minutes: number, seconds: number): number {
+  return Math.max(0, minutes) * 60 + Math.max(0, seconds);
+}
+
+export function validateFiveKTime(totalSeconds: number): string | null {
+  if (totalSeconds < 12 * 60) {
+    return 'Een 5K-tijd onder de 12 minuten is onrealistisch. Controleer je invoer.';
+  }
+  if (totalSeconds > 45 * 60) {
+    return 'Een 5K-tijd boven de 45 minuten is wellicht te langzaam voor intervallen. Overweeg eerst je basisconditie op te bouwen.';
+  }
+  if (totalSeconds === 0) {
+    return 'Voer je 5K-tijd in.';
+  }
+  return null;
+}
+
 /**
  * Format seconds to mm:ss or hh:mm:ss string
  */

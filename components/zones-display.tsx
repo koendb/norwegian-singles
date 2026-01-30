@@ -1,6 +1,7 @@
 'use client';
 
-import { Activity, Heart } from 'lucide-react';
+import Link from 'next/link';
+import { Activity } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -8,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { formatPace, kmPaceToMilePace, type CalculatorResult } from '@/lib/pace-utils';
 
 interface ZonesDisplayProps {
@@ -58,54 +59,10 @@ export function ZonesDisplay({ result, useMiles }: ZonesDisplayProps) {
             <strong>Tip:</strong> Het herstel moet echt heel makkelijk voelen. Als je na 
             het herstel niet fris genoeg bent voor de volgende interval, jog dan langzamer.
           </p>
-        </CardContent>
-      </Card>
-
-      {/* All Training Zones */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Heart className="h-5 w-5 text-primary" />
-            Alle trainingszones
-          </CardTitle>
-          <CardDescription>
-            Overzicht van al je tempo&apos;s voor verschillende trainingstypen.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            {result.zones.map((zone) => (
-              <div
-                key={zone.name}
-                className="flex flex-col gap-2 rounded-lg border border-border p-4 sm:flex-row sm:items-center sm:justify-between"
-              >
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <div
-                      className="h-3 w-3 rounded-full"
-                      style={{ backgroundColor: zone.color }}
-                    />
-                    <span className="font-medium">{zone.name}</span>
-                  </div>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    {zone.description}
-                  </p>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="text-right">
-                    <p className="text-lg font-semibold">
-                      {formatZonePace(zone.maxPace)} - {formatZonePace(zone.minPace)}
-                    </p>
-                    <p className="text-xs text-muted-foreground">per {unit}</p>
-                  </div>
-                  {zone.hrPercentMin && zone.hrPercentMax && (
-                    <Badge variant="outline" className="whitespace-nowrap">
-                      {zone.hrPercentMin}-{zone.hrPercentMax}% HR
-                    </Badge>
-                  )}
-                </div>
-              </div>
-            ))}
+          <div className="mt-6">
+            <Button asChild>
+              <Link href="#calculator-form">Bereken mijn tempo&apos;s</Link>
+            </Button>
           </div>
         </CardContent>
       </Card>
