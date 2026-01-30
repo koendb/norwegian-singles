@@ -1,29 +1,29 @@
 export const homeHero = {
-  badgeText: "De trainingsmethode van Noorse topatleten",
-  titlePrefix: "Train slimmer met",
+  badgeText: "Meer resultaat, minder belasting",
+  titlePrefix: "Slimmer hardlopen met",
   titleHighlight: "Norwegian Singles",
   description:
-    "Verbeter je uithoudingsvermogen met gecontroleerde intervallen. Bereken je persoonlijke tempo's en start vandaag nog met deze bewezen trainingsmethode.",
+    "Bereken je persoonlijke tempo’s en train met gecontroleerde intervallen voor duurzame progressie.",
   primaryCta: {
     label: "Bereken je tempo",
     href: "/calculator",
   },
   secondaryCta: {
-    label: "Leer de methode",
+    label: "De methode",
     href: "/uitleg",
   },
   stats: [
     {
-      value: "5-8",
+      value: "3-12",
       label: "Minuten per interval",
     },
     {
-      value: "70-80%",
-      label: "Van max hartslag",
+      value: "6",
+      label: "RPE",
     },
     {
-      value: "25+",
-      label: "Min totale training",
+      value: "85-88%",
+      label: "HR einde interval",
     },
   ],
 };
@@ -31,37 +31,37 @@ export const homeHero = {
 export const homeFeatures = {
   title: "Waarom Norwegian Singles?",
   description:
-    "Een bewezen methode die door Noorse topatleten is geperfectioneerd en nu beschikbaar is voor elke hardloper.",
+    "Een bewezen trainingsmethode gericht op duurzame vooruitgang, met gecontroleerde intensiteit en realistische belasting.",
   items: [
     {
       icon: "heart",
-      title: "Lactaatdrempel verbeteren",
+      title: "Energie om te leven",
       description:
-        "Train je lichaam om lactaat efficiënter te verwerken. Zo kun je langer een hoger tempo volhouden.",
+        "Genoeg energie om na een hardlooptraining met familie en vrienden op stap te gaan.",
     },
     {
       icon: "zap",
       title: "Hoog volume, lage belasting",
       description:
-        "Bouw meer trainingsvolume op zonder het risico op blessures. De korte herstelperiodes houden je fris.",
+        "Bouw meer trainingsvolume op met een kleiner risico op blessures",
     },
     {
       icon: "shield",
       title: "Blessurepreventie",
       description:
-        "Door onder de rode zone te blijven, voorkom je overbelasting terwijl je toch effectief traint.",
+        "Door een lagere piekbelasting voorkom je overbelasting terwijl je wel effectief traint.",
     },
     {
       icon: "target",
-      title: "Gecontroleerde intensiteit",
+      title: "Voor serieuze amateurs",
       description:
-        "Train op het juiste tempo met behulp van onze calculator. Geen giswerk, alleen resultaten.",
+        "Geschikt voor lopers tussen de 50 en 100km per week",
     },
     {
       icon: "clock",
       title: "Tijdsefficiënt",
       description:
-        "Een volledige Norwegian Singles sessie duurt 35-45 minuten inclusief warming-up en cooling-down.",
+        "Maximaliseer de tijd met kwalitatieve training, minimaliseer de hersteltijd.",
     },
     {
       icon: "barChart3",
