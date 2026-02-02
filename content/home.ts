@@ -9,9 +9,39 @@ export const homeHero = {
     href: "/calculator",
   },
   secondaryCta: {
-    label: "De methode",
-    href: "/uitleg",
+    label: "Achtergrond",
+    href: "/achtergrond",
   },
+};
+
+export const homeWhatIs = {
+  title: "Wat zijn Norwegian Singles?",
+  description:
+    "Norwegian Singles is een trainingsmethode gebaseerd op frequente, gecontroleerde drempeltraining. Het doel is maximale trainingsbelasting zonder uitputting.",
+};
+
+export const homePillars = {
+  title: "De drie pijlers",
+  items: [
+    {
+      icon: "target",
+      title: "Submaximale intensiteit",
+      description:
+        "Je loopt al je intervallen net onder je anaerobe drempel. Hard genoeg om effect te hebben, maar niet zo hard dat je uitgeput raakt.",
+    },
+    {
+      icon: "clock",
+      title: "Wekelijks dezelfde training",
+      description:
+        "Drie subthreshold-trainingen en verder alleen herstelloopjes.",
+    },
+    {
+      icon: "gauge",
+      title: "5km wedstrijd",
+      description:
+        "Iedere zes weken loop je een 5 km-wedstrijd om je voortgang te meten en je training hierop af te stemmen.",
+    },
+  ],
 };
 
 export const homeFeatures = {
@@ -58,6 +88,31 @@ export const homeFeatures = {
   ],
 };
 
+export const homeForWho = {
+  title: "Voor wie is het geschikt?",
+  description:
+    "Niet elke loper heeft dezelfde achtergrond.",
+  suitable: {
+    title: "Geschikt voor",
+    items: [
+      "Hardlopers die hun 5km tot 21km tijd willen verbeteren",
+      "Lopers die gevoelig zijn voor blessures",
+      "Atleten die meer consistentie in hun training willen",
+      "40+ lopers, die iets minder snel herstellen",
+      "Marathon en ultralopers (met wat aanpassingen aan het schema)",
+    ],
+  },
+  notSuitable: {
+    title: "Niet/minder geschikt voor",
+    items: [
+      "Beginnende hardlopers",
+      "Atleten die minder dan 40km per week lopen",
+      "Lopers die op korte termijn willen pieken",
+      "Baanatleten op afstanden onder de 5km",
+    ],
+  },
+};
+
 export const homeHowItWorks = {
   title: "Hoe werkt het?",
   description: "In vier eenvoudige stappen naar effectievere trainingen.",
@@ -66,19 +121,19 @@ export const homeHowItWorks = {
       number: "01",
       title: "Bepaal je 5K-tijd",
       description:
-        "Gebruik eem recente 5K-wedstrijdtijd of doe een testloop.",
+        "Gebruik een recente 5K-wedstrijdtijd of doe een testloop.",
     },
     {
       number: "02",
       title: "Bereken je tempo's",
       description:
-        "Berken met de Norwegian Singles Calculator je sub-threshold en herstel tempo's.",
+        "Bereken met de Norwegian Singles Calculator je subthreshold en herstel tempo's.",
     },
     {
       number: "03",
       title: "Voer de workouts uit",
       description:
-        "Wissel een sub-threshold training af met een hersteldag.",
+        "Wissel een subthreshold training af met een hersteldag.",
     },
     {
       number: "04",
@@ -93,38 +148,6 @@ export const homeHowItWorks = {
   },
 };
 
-export const homeFaqPreview = {
-  title: "Veelgestelde vragen",
-  description:
-    "Snelle antwoorden op de meest gestelde vragen over Norwegian Singles.",
-  items: [
-    {
-      question: "Wat is het verschil tussen Norwegian Singles en normale intervallen?",
-      answer:
-        "Bij traditionele intervallen loop je vaak tot aan je limiet met volledige rust ertussen. Norwegian Singles zijn submaximaal (rond 85% inspanning) met actief herstel door rustig joggen. Dit zorgt voor meer trainingsvolume met minder belasting.",
-    },
-    {
-      question: "De sub-threshold intervallen voelen te makkelijk, wat moet ik doen?",
-      answer:
-        "Dat is de bedoeling. Je moet je fris voelen en altijd het idee hebben nog enkele intervallen aan te kunnen. ",
-    },
-    {
-      question: "Kan ik Norwegian Singles doen als beginner?",
-      answer:
-        "Natuurlijk kan dat, maar het is belangrijk om eerst een goede basisconditie op te bouwen. ",
-    },
-    {
-      question: "Voor wie zijn Norwegian Singles geschikt?",
-      answer:
-        "Voor lopers die in het verleden last hadden van blessures of gebrek aan motivatie en nu het beste uit zichzelf willen halen.",
-    },
-  ],
-  cta: {
-    label: "Bekijk alle vragen",
-    href: "/faq",
-  },
-};
-
 export const homeCta = {
   title: "Klaar om te beginnen?",
   description:
@@ -134,7 +157,7 @@ export const homeCta = {
     href: "/calculator",
   },
   secondary: {
-    label: "Lees de Uitleg",
-    href: "/uitleg",
+    label: "Lees de achtergrond",
+    href: "/achtergrond",
   },
 };
