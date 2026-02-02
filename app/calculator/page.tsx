@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, Suspense } from 'react';
+import { Lightbulb } from 'lucide-react';
 import { CalculatorForm } from '@/components/calculator-form';
-import { ZonesDisplay } from '@/components/zones-display';
 import { type CalculatorResult } from '@/lib/pace-utils';
 import {
   Card,
@@ -21,19 +21,38 @@ import {
 } from '@/components/ui/table';
 import {
   calculatorHeader,
-} from '@/content/calculator';
-import {
   distanceBasedSection,
   notesSection,
   timeBasedSection,
-} from '@/content/voorbeelden';
+} from '@/content/calculator';
 
 function CalculatorContent() {
   const [result, setResult] = useState<CalculatorResult | null>(null);
   const useMiles = false;
 
+  const notesCard = (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Lightbulb className="h-5 w-5 text-primary" />
+          {notesSection.title}
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ul className="space-y-2">
+          {notesSection.items.map((note, index) => (
+            <li key={index} className="flex items-start gap-2">
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+              <span className="text-muted-foreground">{note}</span>
+            </li>
+          ))}
+        </ul>
+      </CardContent>
+    </Card>
+  );
+
   return (
-    <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-6xl overflow-x-hidden px-4 py-12 sm:px-6 lg:px-8">
       {/* Page Header */}
       <div className="mb-10 text-center">
         <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
@@ -46,17 +65,16 @@ function CalculatorContent() {
 
       <div className="grid gap-8 lg:grid-cols-5">
         {/* Calculator Form - Sticky on desktop */}
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-2 min-w-0">
           <div id="calculator-form" className="lg:sticky lg:top-24">
             <CalculatorForm onCalculate={setResult} />
           </div>
         </div>
 
         {/* Results */}
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-3 min-w-0">
           {result ? (
             <div className="space-y-8">
-              <ZonesDisplay result={result} useMiles={useMiles} />
               <Card>
                 <CardHeader>
                   <CardTitle>{timeBasedSection.title}</CardTitle>
@@ -64,10 +82,10 @@ function CalculatorContent() {
                 </CardHeader>
                 <CardContent>
                   <div className="overflow-x-auto">
-                    <Table>
+                    <Table className="w-full">
                       <TableHeader>
                         <TableRow>
-                          <TableHead className="font-semibold">
+                          <TableHead className="hidden font-semibold sm:table-cell">
                             {timeBasedSection.tableHeaders.workout}
                           </TableHead>
                           <TableHead className="font-semibold">
@@ -84,7 +102,7 @@ function CalculatorContent() {
                       <TableBody>
                         {timeBasedSection.rows.map((interval) => (
                           <TableRow key={interval.workout}>
-                            <TableCell className="font-medium">
+                            <TableCell className="hidden font-medium sm:table-cell">
                               {interval.workout}
                             </TableCell>
                             <TableCell>{interval.structure}</TableCell>
@@ -113,10 +131,10 @@ function CalculatorContent() {
                 </CardHeader>
                 <CardContent>
                   <div className="overflow-x-auto">
-                    <Table>
+                    <Table className="w-full">
                       <TableHeader>
                         <TableRow>
-                          <TableHead className="font-semibold">
+                          <TableHead className="hidden font-semibold sm:table-cell">
                             {distanceBasedSection.tableHeaders.workout}
                           </TableHead>
                           <TableHead className="font-semibold">
@@ -133,7 +151,7 @@ function CalculatorContent() {
                       <TableBody>
                         {distanceBasedSection.rows.map((interval) => (
                           <TableRow key={interval.workout}>
-                            <TableCell className="font-medium">
+                            <TableCell className="hidden font-medium sm:table-cell">
                               {interval.workout}
                             </TableCell>
                             <TableCell>{interval.structure}</TableCell>
@@ -155,51 +173,13 @@ function CalculatorContent() {
                   </div>
                 </CardContent>
               </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>{notesSection.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
-                    {notesSection.items.map((note, index) => (
-                      <li key={index} className="flex items-start gap-2">
-                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-                        <span className="text-muted-foreground">{note}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-              <div className="rounded-lg bg-accent p-4">
-                <h4 className="font-semibold">Weekschema suggestie</h4>
-                <div className="mt-3 grid gap-2 text-sm sm:grid-cols-7">
-                  {[
-                    { day: 'Ma', workout: 'Rust of licht', type: 'rest' },
-                    { day: 'Di', workout: 'Duurloop 40-60 min', type: 'easy' },
-                    { day: 'Wo', workout: 'Norwegian Singles', type: 'key' },
-                    { day: 'Do', workout: 'Rust of herstelloop', type: 'rest' },
-                    { day: 'Vr', workout: 'Duurloop 30-45 min', type: 'easy' },
-                    { day: 'Za', workout: 'Lange duurloop', type: 'long' },
-                    { day: 'Zo', workout: 'Rust', type: 'rest' },
-                  ].map((day) => (
-                    <div
-                      key={day.day}
-                      className={`rounded-lg p-2 text-center ${
-                        day.type === 'key'
-                          ? 'bg-primary text-primary-foreground'
-                          : day.type === 'rest'
-                            ? 'bg-secondary'
-                            : 'bg-background'
-                      }`}
-                    >
-                      <p className="font-semibold">{day.day}</p>
-                      <p className="mt-1 text-xs leading-tight">{day.workout}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              {notesCard}
             </div>
-          ) : null}
+          ) : (
+            <div className="space-y-8">
+              {notesCard}
+            </div>
+          )}
         </div>
       </div>
     </div>

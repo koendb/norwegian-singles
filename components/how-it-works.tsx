@@ -5,7 +5,7 @@ import { homeHowItWorks } from '@/content/home';
 
 export function HowItWorks() {
   return (
-    <section className="bg-background py-20 sm:py-28">
+    <section className="bg-background pt-14 pb-16 sm:pt-20 sm:pb-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mx-auto max-w-2xl text-center">

@@ -43,18 +43,6 @@ export function Hero() {
               </Link>
             </Button>
           </div>
-
-          {/* Quick Stats */}
-          <div className="mt-16 grid grid-cols-3 gap-8 border-t border-border pt-10">
-            {homeHero.stats.map((stat) => (
-              <div key={stat.label}>
-                <p className="text-3xl font-bold text-primary sm:text-4xl">
-                  {stat.value}
-                </p>
-                <p className="mt-1 text-sm text-muted-foreground">{stat.label}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </section>

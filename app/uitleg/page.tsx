@@ -221,6 +221,38 @@ export default function UitlegPage() {
         </div>
       </section>
 
+      {/* Weekly Schedule */}
+      <section className="mb-16">
+        <div className="rounded-lg bg-accent p-4">
+          <h4 className="font-semibold">Weekschema suggestie</h4>
+          <div className="mt-3 grid gap-2 text-sm sm:grid-cols-7">
+            {[
+              { day: 'Ma', workout: 'Rust of licht', type: 'rest' },
+              { day: 'Di', workout: 'Duurloop 40-60 min', type: 'easy' },
+              { day: 'Wo', workout: 'Norwegian Singles', type: 'key' },
+              { day: 'Do', workout: 'Rust of herstelloop', type: 'rest' },
+              { day: 'Vr', workout: 'Duurloop 30-45 min', type: 'easy' },
+              { day: 'Za', workout: 'Lange duurloop', type: 'long' },
+              { day: 'Zo', workout: 'Rust', type: 'rest' },
+            ].map((day) => (
+              <div
+                key={day.day}
+                className={`rounded-lg p-2 text-center ${
+                  day.type === 'key'
+                    ? 'bg-primary text-primary-foreground'
+                    : day.type === 'rest'
+                      ? 'bg-secondary'
+                      : 'bg-background'
+                }`}
+              >
+                <p className="font-semibold">{day.day}</p>
+                <p className="mt-1 text-xs leading-tight">{day.workout}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="rounded-xl bg-secondary/50 p-8 text-center">
         <h2 className="text-2xl font-bold text-foreground">

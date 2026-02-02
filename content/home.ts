@@ -12,20 +12,6 @@ export const homeHero = {
     label: "De methode",
     href: "/uitleg",
   },
-  stats: [
-    {
-      value: "3-12",
-      label: "Minuten per interval",
-    },
-    {
-      value: "6",
-      label: "RPE",
-    },
-    {
-      value: "85-88%",
-      label: "HR einde interval",
-    },
-  ],
 };
 
 export const homeFeatures = {
@@ -37,23 +23,23 @@ export const homeFeatures = {
       icon: "heart",
       title: "Energie om te leven",
       description:
-        "Genoeg energie om na een hardlooptraining met familie en vrienden op stap te gaan.",
+        "Hard trainen zonder dat het ten koste gaat van je dagelijkse leven.",
     },
     {
       icon: "zap",
       title: "Hoog volume, lage belasting",
       description:
-        "Bouw meer trainingsvolume op met een kleiner risico op blessures",
+        "Meer kilometers met minder stress op je lichaam",
     },
     {
       icon: "shield",
       title: "Blessurepreventie",
       description:
-        "Door een lagere piekbelasting voorkom je overbelasting terwijl je wel effectief traint.",
+        "Door gecontroleerde intensiteit verklein je de kans op blessures.",
     },
     {
       icon: "target",
-      title: "Voor serieuze amateurs",
+      title: "Voor ambitieuze amateurs",
       description:
         "Geschikt voor lopers tussen de 50 en 100km per week",
     },
@@ -61,13 +47,13 @@ export const homeFeatures = {
       icon: "clock",
       title: "Tijdsefficiënt",
       description:
-        "Maximaliseer de tijd met kwalitatieve training, minimaliseer de hersteltijd.",
+        "Maximaliseer je kwalitatieve trainingsuren, minimaliseer de hersteltijd.",
     },
     {
       icon: "barChart3",
       title: "Meetbare vooruitgang",
       description:
-        "Volg je ontwikkeling met steeds snellere 5K-tijden en verbeterde duurlooptempo's.",
+        "Volg je ontwikkeling met steeds snellere 5K-tijden.",
     },
   ],
 };
@@ -80,25 +66,25 @@ export const homeHowItWorks = {
       number: "01",
       title: "Bepaal je 5K-tijd",
       description:
-        "Gebruik je recente 5K-wedstrijdtijd of doe een tijdrit. Dit is de basis voor al je berekeningen.",
+        "Gebruik eem recente 5K-wedstrijdtijd of doe een testloop.",
     },
     {
       number: "02",
-      title: "Bereken je zones",
+      title: "Bereken je tempo's",
       description:
-        "Onze calculator bepaalt je Norwegian Single tempo en hersteltempo op basis van je 5K-tijd.",
+        "Berken met de Norwegian Singles Calculator je sub-threshold en herstel tempo's.",
     },
     {
       number: "03",
-      title: "Voer de workout uit",
+      title: "Voer de workouts uit",
       description:
-        "Loop 5-6 intervallen van 5-8 minuten op je Single tempo, met 1 minuut rustig joggen ertussen.",
+        "Wissel een sub-threshold training af met een hersteldag.",
     },
     {
       number: "04",
       title: "Herhaal & verbeter",
       description:
-        "Train 1-2x per week met Norwegian Singles. Na enkele weken zul je verbetering merken.",
+        "Geen taper, geen downweken — gewoon doorbouwen.",
     },
   ],
   cta: {
@@ -118,14 +104,19 @@ export const homeFaqPreview = {
         "Bij traditionele intervallen loop je vaak tot aan je limiet met volledige rust ertussen. Norwegian Singles zijn submaximaal (rond 85% inspanning) met actief herstel door rustig joggen. Dit zorgt voor meer trainingsvolume met minder belasting.",
     },
     {
-      question: "Hoe vaak moet ik Norwegian Singles trainen?",
+      question: "De sub-threshold intervallen voelen te makkelijk, wat moet ik doen?",
       answer:
-        "Voor de meeste hardlopers is 1-2 keer per week ideaal. Combineer dit met makkelijke duurlopen en eventueel één snellere training. Meer is niet altijd beter; herstel is essentieel.",
+        "Dat is de bedoeling. Je moet je fris voelen en altijd het idee hebben nog enkele intervallen aan te kunnen. ",
     },
     {
       question: "Kan ik Norwegian Singles doen als beginner?",
       answer:
-        "Ja, maar bouw eerst een goede basisconditie op met regelmatige duurlopen. Als je comfortabel 30 minuten aan één stuk kunt lopen, kun je beginnen met kortere Norwegian Singles varianten.",
+        "Natuurlijk kan dat, maar het is belangrijk om eerst een goede basisconditie op te bouwen. ",
+    },
+    {
+      question: "Voor wie zijn Norwegian Singles geschikt?",
+      answer:
+        "Voor lopers die in het verleden last hadden van blessures of gebrek aan motivatie en nu het beste uit zichzelf willen halen.",
     },
   ],
   cta: {

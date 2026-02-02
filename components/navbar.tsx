@@ -10,7 +10,6 @@ import { cn } from '@/lib/utils';
 const navItems = [
   { href: '/', label: 'Home' },
   { href: '/calculator', label: 'Calculator' },
-  { href: '/voorbeeld', label: 'Voorbeeld' },
   { href: '/uitleg', label: 'Uitleg' },
   { href: '/achtergrond', label: 'Achtergrond' },
   { href: '/faq', label: 'FAQ' },

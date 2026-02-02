@@ -5,7 +5,7 @@ import { homeCta } from '@/content/home';
 
 export function CtaSection() {
   return (
-    <section className="bg-primary py-20 sm:py-28">
+    <section className="bg-primary pt-14 pb-16 sm:pt-20 sm:pb-24">
       <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
         <h2 className="text-3xl font-bold tracking-tight text-primary-foreground sm:text-4xl">
           {homeCta.title}

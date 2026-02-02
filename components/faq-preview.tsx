@@ -11,7 +11,7 @@ import { homeFaqPreview } from '@/content/home';
 
 export function FaqPreview() {
   return (
-    <section className="bg-secondary/30 py-20 sm:py-28">
+    <section className="bg-secondary/30 pt-14 pb-16 sm:pt-20 sm:pb-24">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center">

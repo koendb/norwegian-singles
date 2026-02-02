@@ -5,7 +5,6 @@ const footerLinks = {
   methode: [
     { href: '/uitleg', label: 'Uitleg' },
     { href: '/achtergrond', label: 'Achtergrond' },
-    { href: '/voorbeelden', label: 'Voorbeelden' },
   ],
   hulpmiddelen: [
     { href: '/calculator', label: 'Pace Calculator' },

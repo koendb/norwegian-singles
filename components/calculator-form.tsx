@@ -57,8 +57,14 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
     e.preventDefault();
     setError(null);
 
-    const mins = parseInt(minutes, 10) || 0;
-    const secs = parseInt(seconds, 10) || 0;
+    const isEmptyInput = minutes.trim() === '' && seconds.trim() === '';
+    const mins = isEmptyInput ? 20 : parseInt(minutes, 10) || 0;
+    const secs = isEmptyInput ? 0 : parseInt(seconds, 10) || 0;
+
+    if (isEmptyInput) {
+      setMinutes('20');
+      setSeconds('00');
+    }
     const totalSeconds = timePartsToSeconds(mins, secs);
 
     const validationError = validateFiveKTime(totalSeconds);
