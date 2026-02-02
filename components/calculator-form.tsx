@@ -27,6 +27,10 @@ import {
   timePartsToSeconds,
   validateFiveKTime,
 } from '@/lib/pace-utils';
+import {
+  GOATCOUNTER_EVENT_CALCULATE_PACES_PATH,
+  GOATCOUNTER_EVENT_CALCULATE_PACES_TITLE,
+} from "@/content/analytics";
 
 interface CalculatorFormProps {
   onCalculate: (result: CalculatorResult) => void;
@@ -75,6 +79,14 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
 
     const result = calculateZones(totalSeconds);
     onCalculate(result);
+
+    const goatcounter = typeof window !== "undefined" ? (window as any).goatcounter : undefined;
+    if (goatcounter && typeof goatcounter.count === "function") {
+      goatcounter.count({
+        path: GOATCOUNTER_EVENT_CALCULATE_PACES_PATH,
+        title: GOATCOUNTER_EVENT_CALCULATE_PACES_TITLE,
+      });
+    }
   };
 
   return (
@@ -85,8 +97,7 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
           Voer je 5K-tijd in
         </CardTitle>
         <CardDescription>
-          Gebruik je meest recente 5K-wedstrijdtijd of een recente tijdrit voor 
-          de meest nauwkeurige berekeningen.
+          Gebruik je meest recente 5K-wedstrijdtijd of je huidige geschatte 5k tijd in om jouw tempo's te berekenen.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -102,9 +113,7 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
                   </TooltipTrigger>
                   <TooltipContent className="max-w-xs">
                     <p>
-                      Gebruik je wedstrijdtijd of een recente tijdrit. Als je geen 
-                      recente 5K hebt, kun je een schatting maken op basis van je 
-                      10K-tijd minus 2-3 minuten.
+                      Gebruik je wedstrijdtijd of een schatting. Eventueel kun je een recente 10km tijd x 0,48 doen.
                     </p>
                   </TooltipContent>
                 </Tooltip>
@@ -154,7 +163,7 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
           )}
 
           {/* Submit Button */}
-          <Button type="submit" className="w-full" size="lg">
+          <Button type="submit" className="w-full cursor-pointer" size="lg">
             Bereken mijn tempo&apos;s
           </Button>
         </form>

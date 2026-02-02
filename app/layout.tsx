@@ -1,9 +1,11 @@
 import React from "react"
+import Script from "next/script";
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
+import { GOATCOUNTER_ENDPOINT } from "@/content/analytics";
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -59,6 +61,11 @@ export default function RootLayout({
   return (
     <html lang="nl">
       <body className="font-sans antialiased">
+        <Script
+          async
+          data-goatcounter={GOATCOUNTER_ENDPOINT}
+          src="https://gc.zgo.at/count.js"
+        />
         <Navbar />
         <main className="min-h-[calc(100vh-4rem)]">
           {children}

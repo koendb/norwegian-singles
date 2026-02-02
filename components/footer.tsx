@@ -3,13 +3,20 @@ import { Activity } from 'lucide-react';
 
 const footerLinks = {
   methode: [
-    { href: '/uitleg', label: 'Uitleg' },
     { href: '/achtergrond', label: 'Achtergrond' },
+    {
+      href: 'https://www.amazon.nl/Norwegian-Singles-Method-Subthreshold-Running/dp/B0G4D8438Z/ref=asc_df_B0G4D8438Z?mcid=cb5b1bc6b70331edae4011b4821b43b4&tag=nlshogostdde-21&linkCode=df0&hvadid=710146015862&hvpos=&hvnetw=g&hvrand=8022875777135471680&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=1010722&hvtargid=pla-2455151581631&psc=1&gad_source=1',
+      label: 'Het boek',
+      external: true,
+    },
   ],
   hulpmiddelen: [
     { href: '/calculator', label: 'Pace Calculator' },
-    { href: '/begrippen', label: 'Begrippen' },
-    { href: '/faq', label: 'FAQ' },
+    {
+      href: 'https://forms.gle/kKzoJDd7k4Focoj38',
+      label: 'Neem contact op',
+      external: true,
+    },
   ],
 };
 
@@ -30,8 +37,7 @@ export function Footer() {
             </Link>
             <p className="mt-4 max-w-md text-sm leading-relaxed text-muted-foreground">
               Norwegian Singles is een effectieve trainingsmethode voor hardlopers 
-              die hun uithoudingsvermogen willen verbeteren zonder overmatige belasting. 
-              Leer de methode en bereken je persoonlijke tempo&apos;s.
+              die hun uithoudingsvermogen willen verbeteren zonder overmatige belasting.
             </p>
           </div>
 
@@ -45,6 +51,8 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
+                    target={link.external ? '_blank' : undefined}
+                    rel={link.external ? 'noreferrer' : undefined}
                     className="text-sm text-muted-foreground transition-colors hover:text-primary"
                   >
                     {link.label}
@@ -64,6 +72,8 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
+                    target={link.external ? '_blank' : undefined}
+                    rel={link.external ? 'noreferrer' : undefined}
                     className="text-sm text-muted-foreground transition-colors hover:text-primary"
                   >
                     {link.label}
@@ -83,8 +93,7 @@ export function Footer() {
             De berekende tempo&apos;s zijn schattingen en kunnen per individu verschillen.
           </p>
           <p className="mt-4 text-center text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Norwegian Singles. Geen officiële affiliatie 
-            met Noorse atletiekorganisaties.
+            © {new Date().getFullYear()} NorwegianSingles.nl
           </p>
         </div>
       </div>

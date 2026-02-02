@@ -3,7 +3,7 @@
 import { useState, Suspense } from 'react';
 import { Lightbulb } from 'lucide-react';
 import { CalculatorForm } from '@/components/calculator-form';
-import { type CalculatorResult } from '@/lib/pace-utils';
+import { formatPace, type CalculatorResult } from '@/lib/pace-utils';
 import {
   Card,
   CardContent,
@@ -28,7 +28,108 @@ import {
 
 function CalculatorContent() {
   const [result, setResult] = useState<CalculatorResult | null>(null);
+  const [calculationKey, setCalculationKey] = useState(0);
   const useMiles = false;
+  const riegelExponent = 1.06;
+  const paceTargetsByWorkout = {
+    "korte intervallen": { type: "single", km: 15 },
+    "medium intervallen": { type: "single", km: 21.0975 },
+    "lange intervallen": { type: "single", km: 30 },
+    "1k intervallen": { type: "single", km: 15 },
+    "2k intervallen": { type: "single", km: 21.0975 },
+    "3k intervallen": { type: "single", km: 30 },
+  } as const;
+
+  const predictTimeSeconds = (
+    baseTimeSeconds: number,
+    baseDistanceKm: number,
+    targetDistanceKm: number,
+  ) => baseTimeSeconds * Math.pow(targetDistanceKm / baseDistanceKm, riegelExponent);
+
+  const getRecoveryRunPace = (currentResult: CalculatorResult | null) => {
+    if (!currentResult) {
+      return "n.v.t.";
+    }
+    const speedKmPerHour = 3600 / currentResult.fiveKPace;
+    const minRecoverySpeed = speedKmPerHour * 0.6;
+    const maxRecoverySpeed = speedKmPerHour * 0.7;
+    const minRecoveryPaceSeconds = 3600 / maxRecoverySpeed;
+    const maxRecoveryPaceSeconds = 3600 / minRecoverySpeed;
+    return formatPaceRange(minRecoveryPaceSeconds, maxRecoveryPaceSeconds);
+  };
+
+  const formatPaceRange = (minSecondsPerKm: number, maxSecondsPerKm: number) => {
+    const minPace = formatPace(minSecondsPerKm);
+    const maxPace = formatPace(maxSecondsPerKm);
+    return `${minPace}-${maxPace}/km`;
+  };
+
+  const getPaceTargetFromInterval = (interval: {
+    paceTarget?: { type: "range"; minKm: number; maxKm: number } | { type: "single"; km: number };
+    paceNote?: string;
+  }) => {
+    if (interval.paceTarget) {
+      return interval.paceTarget;
+    }
+
+    if (!interval.paceNote) {
+      return null;
+    }
+
+    const note = interval.paceNote.toLowerCase();
+    if (note.includes("15k")) {
+      return { type: "single", km: 15 } as const;
+    }
+    if (note.includes("hm") || note.includes("half")) {
+      return { type: "single", km: 21.0975 } as const;
+    }
+    if (note.includes("30k")) {
+      return { type: "single", km: 30 } as const;
+    }
+
+    return null;
+  };
+
+  const getIntervalPace = (interval: {
+    targetPace: string;
+    workout?: string;
+    paceTarget?: { type: "range"; minKm: number; maxKm: number } | { type: "single"; km: number };
+    paceNote?: string;
+  }) => {
+    const workoutKey = interval.workout?.trim().toLowerCase();
+    const paceTarget =
+      (workoutKey ? paceTargetsByWorkout[workoutKey as keyof typeof paceTargetsByWorkout] : null) ||
+      interval.paceTarget ||
+      getPaceTargetFromInterval(interval);
+    if (!result || !paceTarget) {
+      return interval.targetPace;
+    }
+
+    const fiveKTimeSeconds = result.fiveKPace * 5;
+
+    if (paceTarget.type === "range") {
+      const minPaceSeconds =
+        predictTimeSeconds(fiveKTimeSeconds, 5, paceTarget.minKm) /
+        paceTarget.minKm;
+      const maxPaceSeconds =
+        predictTimeSeconds(fiveKTimeSeconds, 5, paceTarget.maxKm) /
+        paceTarget.maxKm;
+      return formatPaceRange(minPaceSeconds, maxPaceSeconds);
+    }
+
+    const paceSeconds =
+      predictTimeSeconds(fiveKTimeSeconds, 5, paceTarget.km) / paceTarget.km;
+
+    if (paceTarget.km === 15) {
+      return formatPaceRange(paceSeconds - 2, paceSeconds + 6);
+    }
+
+    if (paceTarget.km === 21.0975 || paceTarget.km === 30) {
+      return formatPaceRange(paceSeconds - 1, paceSeconds + 7);
+    }
+
+    return `${formatPace(paceSeconds)}/km`;
+  };
 
   const notesCard = (
     <Card>
@@ -51,6 +152,11 @@ function CalculatorContent() {
     </Card>
   );
 
+  const handleCalculate = (nextResult: CalculatorResult) => {
+    setResult(nextResult);
+    setCalculationKey((prev) => prev + 1);
+  };
+
   return (
     <div className="mx-auto max-w-6xl overflow-x-hidden px-4 py-12 sm:px-6 lg:px-8">
       {/* Page Header */}
@@ -67,14 +173,14 @@ function CalculatorContent() {
         {/* Calculator Form - Sticky on desktop */}
         <div className="lg:col-span-2 min-w-0">
           <div id="calculator-form" className="lg:sticky lg:top-24">
-            <CalculatorForm onCalculate={setResult} />
+            <CalculatorForm onCalculate={handleCalculate} />
           </div>
         </div>
 
         {/* Results */}
         <div className="lg:col-span-3 min-w-0">
           {result ? (
-            <div className="space-y-8">
+            <div key={calculationKey} className="space-y-8">
               <Card>
                 <CardHeader>
                   <CardTitle>{timeBasedSection.title}</CardTitle>
@@ -109,7 +215,7 @@ function CalculatorContent() {
                             <TableCell>
                               <div className="flex flex-col">
                                 <span className="font-semibold text-primary">
-                                  {interval.targetPace}
+                                  {getIntervalPace(interval)}
                                 </span>
                                 <span className="text-sm text-muted-foreground">
                                   {interval.paceNote}
@@ -119,6 +225,23 @@ function CalculatorContent() {
                             <TableCell>{interval.recovery}</TableCell>
                           </TableRow>
                         ))}
+                        <TableRow key="herstelloop-tijd">
+                          <TableCell className="hidden font-medium sm:table-cell">
+                            Herstelloop
+                          </TableCell>
+                          <TableCell>n.v.t.</TableCell>
+                          <TableCell>
+                            <div className="flex flex-col">
+                              <span className="font-semibold text-primary">
+                                {getRecoveryRunPace(result)}
+                              </span>
+                              <span className="text-sm text-muted-foreground">
+                                herstel
+                              </span>
+                            </div>
+                          </TableCell>
+                          <TableCell>n.v.t.</TableCell>
+                        </TableRow>
                       </TableBody>
                     </Table>
                   </div>
@@ -158,7 +281,7 @@ function CalculatorContent() {
                             <TableCell>
                               <div className="flex flex-col">
                                 <span className="font-semibold text-primary">
-                                  {interval.targetPace}
+                                  {getIntervalPace(interval)}
                                 </span>
                                 <span className="text-sm text-muted-foreground">
                                   {interval.paceNote}
@@ -168,6 +291,23 @@ function CalculatorContent() {
                             <TableCell>{interval.recovery}</TableCell>
                           </TableRow>
                         ))}
+                        <TableRow key="herstelloop-afstand">
+                          <TableCell className="hidden font-medium sm:table-cell">
+                            Herstelloop
+                          </TableCell>
+                          <TableCell>n.v.t.</TableCell>
+                          <TableCell>
+                            <div className="flex flex-col">
+                              <span className="font-semibold text-primary">
+                                {getRecoveryRunPace(result)}
+                              </span>
+                              <span className="text-sm text-muted-foreground">
+                                herstel
+                              </span>
+                            </div>
+                          </TableCell>
+                          <TableCell>n.v.t.</TableCell>
+                        </TableRow>
                       </TableBody>
                     </Table>
                   </div>

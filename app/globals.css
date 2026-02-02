@@ -4,14 +4,12 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Strava-inspired: vibrant orange on clean white */
   --background: oklch(0.995 0 0);
   --foreground: oklch(0.15 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.15 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.15 0 0);
-  /* Primary: Strava Orange */
   --primary: oklch(0.65 0.2 35);
   --primary-foreground: oklch(1 0 0);
   /* Secondary: Light gray */
