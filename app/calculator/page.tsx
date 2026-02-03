@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, Suspense } from 'react';
+import { useState, Suspense, useCallback } from 'react';
 import { Lightbulb } from 'lucide-react';
 import { CalculatorForm } from '@/components/calculator-form';
 import { formatPace, type CalculatorResult } from '@/lib/pace-utils';
@@ -50,12 +50,8 @@ function CalculatorContent() {
     if (!currentResult) {
       return "n.v.t.";
     }
-    const speedKmPerHour = 3600 / currentResult.fiveKPace;
-    const minRecoverySpeed = speedKmPerHour * 0.6;
-    const maxRecoverySpeed = speedKmPerHour * 0.7;
-    const minRecoveryPaceSeconds = 3600 / maxRecoverySpeed;
-    const maxRecoveryPaceSeconds = 3600 / minRecoverySpeed;
-    return formatPaceRange(minRecoveryPaceSeconds, maxRecoveryPaceSeconds);
+    const recoveryPaceSeconds = currentResult.fiveKPace / 0.67;
+    return `+/- ${formatPace(recoveryPaceSeconds)}/km`;
   };
 
   const formatPaceRange = (minSecondsPerKm: number, maxSecondsPerKm: number) => {
@@ -152,10 +148,10 @@ function CalculatorContent() {
     </Card>
   );
 
-  const handleCalculate = (nextResult: CalculatorResult) => {
+  const handleCalculate = useCallback((nextResult: CalculatorResult) => {
     setResult(nextResult);
     setCalculationKey((prev) => prev + 1);
-  };
+  }, []);
 
   return (
     <div className="mx-auto max-w-6xl overflow-x-hidden px-4 py-12 sm:px-6 lg:px-8">

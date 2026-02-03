@@ -99,7 +99,7 @@ export const homeForWho = {
       "Lopers die gevoelig zijn voor blessures",
       "Atleten die meer consistentie in hun training willen",
       "40+ lopers, die iets minder snel herstellen",
-      "Marathon en ultralopers (met wat aanpassingen aan het schema)",
+      "Marathonlopers (met wat aanpassingen aan het schema)",
     ],
   },
   notSuitable: {

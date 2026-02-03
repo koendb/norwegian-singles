@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils';
 const navItems = [
   { href: '/', label: 'Home' },
   { href: '/calculator', label: 'Calculator' },
-  { href: '/schema', label: 'Schema' },
+  { href: '/week', label: 'Weekschema' },
   { href: '/achtergrond', label: 'Achtergrond' },
 ];
 

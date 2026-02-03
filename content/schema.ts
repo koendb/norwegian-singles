@@ -73,7 +73,7 @@ export const paceGuidance = {
       ". Dit tempo is een benadering. Met dit tempo streef je naar een lactaatwaarde net onder je lactaatdrempel; de gevoelde inspanning (RPE) ligt rond de 6 op een schaal van 1 tot 10 en je kan bij deze inspanning nog in volledige zinnen spreken. Voelt het te zwaar, schakel dan iets terug. Tussen de intervallen kun je stilstaan, wandelen of zeer rustig joggen.",
   },
   recoveryParagraph:
-    "Je pace voor de herstelloopjes is veel langzamer dan je gewend bent. Het is belangrijk om deze goed uit te voeren, zodat je de volgende dag weer fris je subthreshold training kunt uitvoeren.",
+    "Je herstelloopjes zijn veel langzamer dan je normale tempo. Richt je op ongeveer 65% van je VO2-max, maar voel vooral: dit mag geen moeite kosten. Zo blijf je fris genoeg om de volgende dag weer kwaliteit te leveren.",
 };
 
 export const beginnersGuidance = {

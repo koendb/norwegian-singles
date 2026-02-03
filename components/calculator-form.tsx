@@ -2,7 +2,7 @@
 
 import React from "react"
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Calculator, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -26,6 +26,7 @@ import {
   type CalculatorResult,
   timePartsToSeconds,
   validateFiveKTime,
+  formatSecondsToTime,
 } from '@/lib/pace-utils';
 import {
   GOATCOUNTER_EVENT_CALCULATE_PACES_PATH,
@@ -36,26 +37,56 @@ interface CalculatorFormProps {
   onCalculate: (result: CalculatorResult) => void;
 }
 
+const CALCULATOR_COOKIE_NAME = 'ns_5k_time';
+const CALCULATOR_COOKIE_MAX_AGE_DAYS = 90;
+
+const readCookie = (name: string) => {
+  if (typeof document === 'undefined') return null;
+  const cookies = document.cookie.split('; ').filter(Boolean);
+  const entry = cookies.find((cookie) => cookie.startsWith(`${name}=`));
+  if (!entry) return null;
+  const value = entry.split('=').slice(1).join('=');
+  return decodeURIComponent(value || '');
+};
+
+const writeCookie = (name: string, value: string, maxAgeDays: number) => {
+  if (typeof document === 'undefined') return;
+  const maxAgeSeconds = maxAgeDays * 24 * 60 * 60;
+  document.cookie = `${name}=${encodeURIComponent(value)}; max-age=${maxAgeSeconds}; path=/; samesite=lax`;
+};
+
 export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
   const searchParams = useSearchParams();
   
   const [minutes, setMinutes] = useState('');
   const [seconds, setSeconds] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const hasHydratedFromCookie = useRef(false);
 
-  // Handle prefilled time from URL
+  // Handle prefilled time from URL or cookie
   useEffect(() => {
+    if (hasHydratedFromCookie.current) return;
+    hasHydratedFromCookie.current = true;
+
     const timeParam = searchParams.get('tijd');
-    if (timeParam) {
-      const totalSeconds = parseTimeToSeconds(timeParam);
-      if (totalSeconds) {
-        const mins = Math.floor(totalSeconds / 60);
-        const secs = totalSeconds % 60;
-        setMinutes(mins.toString());
-        setSeconds(secs.toString().padStart(2, '0'));
-      }
+    const cookieTime = timeParam ? null : readCookie(CALCULATOR_COOKIE_NAME);
+    const timeValue = timeParam ?? cookieTime;
+    if (!timeValue) return;
+
+    const totalSeconds = parseTimeToSeconds(timeValue);
+    if (!totalSeconds) return;
+
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = totalSeconds % 60;
+    setMinutes(mins.toString());
+    setSeconds(secs.toString().padStart(2, '0'));
+
+    const validationError = validateFiveKTime(totalSeconds);
+    if (!validationError) {
+      const result = calculateZones(totalSeconds);
+      onCalculate(result);
     }
-  }, [searchParams]);
+  }, [searchParams, onCalculate]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -79,6 +110,11 @@ export function CalculatorForm({ onCalculate }: CalculatorFormProps) {
 
     const result = calculateZones(totalSeconds);
     onCalculate(result);
+    writeCookie(
+      CALCULATOR_COOKIE_NAME,
+      formatSecondsToTime(totalSeconds),
+      CALCULATOR_COOKIE_MAX_AGE_DAYS,
+    );
 
     const goatcounter = typeof window !== "undefined" ? (window as any).goatcounter : undefined;
     if (goatcounter && typeof goatcounter.count === "function") {
